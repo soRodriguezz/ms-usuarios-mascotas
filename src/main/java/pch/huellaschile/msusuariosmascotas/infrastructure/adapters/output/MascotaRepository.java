@@ -41,6 +41,34 @@ public class MascotaRepository implements MascotaGateway {
     }
 
     @Override
+    public List<Mascota> findByIdUsuarioAndTratamientoTrue(int idUsuario) {
+        List<MascotaDAO> mascotaDAO = repository.findByIdUsuarioAndTratamientoTrue(idUsuario);
+        return mapper.toMascotas(mascotaDAO);
+    }
+
+    @Override
+    public List<Mascota> findByNombreOrRaza(String nombre, String raza) {
+        List<MascotaDAO> mascotasDAO = repository.findByNombreOrRaza(nombre, raza);
+        return mapper.toMascotas(mascotasDAO);
+    }
+
+    @Override
+    public Mascota findByIdUsuarioAndIdMascota(int idUsuario, int idMascota) {
+        MascotaDAO mascotaDAO = repository.findByIdUsuarioAndIdMascota(idUsuario, idMascota);
+        return mapper.toMascota(mascotaDAO);
+    }
+
+    @Override
+    public boolean existsByNombreContainingIgnoreCase(String nombre) {
+        return repository.existsByNombreContainingIgnoreCase(nombre);
+    }
+
+    @Override
+    public boolean existsByIdMascotaAndTratamientoTrue(int idMascota) {
+        return repository.existsByIdMascotaAndTratamientoTrue(idMascota);
+    }
+
+    @Override
     public Mascota updateMascota(Mascota mascota) {
         MascotaDAO mascotaDAO = repository.save(mapper.toMascotaDAO(mascota));
         return mapper.toMascota(mascotaDAO);

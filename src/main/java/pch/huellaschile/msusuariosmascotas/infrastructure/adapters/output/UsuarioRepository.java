@@ -41,9 +41,20 @@ public class UsuarioRepository implements UsuarioGateway {
     }
 
     @Override
+    public Usuario findByRut(String rut) {
+        UsuarioDAO usuarioDAO = repository.findByRut(rut);
+        return mapper.toUsuario(usuarioDAO);
+    }
+
+    @Override
     public Usuario updateUsuario(Usuario usuario) {
         UsuarioDAO usuarioDAO = repository.save(mapper.toUsuarioDAO(usuario));
         return mapper.toUsuario(usuarioDAO);
+    }
+
+    @Override
+    public boolean existsByIdUsuario(int idUsuario) {
+        return repository.existsByIdUsuario(idUsuario);
     }
 
     @Override

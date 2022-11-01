@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import pch.huellaschile.msusuariosmascotas.application.domain.entities.Mascota;
 import pch.huellaschile.msusuariosmascotas.application.services.mascota.*;
 import pch.huellaschile.msusuariosmascotas.infrastructure.dto.RequestMascotaDTO;
+import pch.huellaschile.msusuariosmascotas.infrastructure.dto.RequestMascotaUsuarioDTO;
+import pch.huellaschile.msusuariosmascotas.infrastructure.dto.RequestNombreRazaDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +32,12 @@ public class MascotaController {
     @Autowired
     private DeleteMascotaService delete;
 
+    @Autowired
+    private GetMascotaByIdUsuarioService getByIdUsuario;
+
+    @Autowired
+    private GetMascotaByNombreService getByNombre;
+
     @GetMapping("/all")
     public ResponseEntity<List<Mascota>> getAll(){
         return new ResponseEntity<>(getAll.execute(), HttpStatus.OK);
@@ -43,6 +51,16 @@ public class MascotaController {
     @PostMapping("/save")
     public ResponseEntity<Mascota> save(@RequestBody RequestMascotaDTO dto) {
         return new ResponseEntity<>(save.execute(dto), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/usuario")
+    public ResponseEntity<Mascota> findByIdUsuarioAndIdMascota(@RequestBody RequestMascotaUsuarioDTO dto) {
+        return new ResponseEntity<>(getByIdUsuario.execute(dto), HttpStatus.OK);
+    }
+
+    @GetMapping("/nameorraza")
+    public ResponseEntity<List<Mascota>> findByNombreOrRaza(@RequestBody RequestNombreRazaDTO dto) {
+        return new ResponseEntity<>(getByNombre.execute(dto), HttpStatus.OK);
     }
 
     @PutMapping("/update")

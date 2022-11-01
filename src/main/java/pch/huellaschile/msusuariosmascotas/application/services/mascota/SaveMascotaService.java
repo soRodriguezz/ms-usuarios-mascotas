@@ -25,6 +25,18 @@ public class SaveMascotaService implements SaveMascotaUseCase {
     @Override
     public Mascota execute(RequestMascotaDTO dto) {
 
+        boolean existeUsuario = gatewayUsuario.existsByIdUsuario(dto.getIdUsuario());
+
+        if(!existeUsuario){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuario no existe");
+        }
+
+        boolean existMascota = gateway.existsByNombreContainingIgnoreCase(dto.getNombre());
+
+        if(existMascota) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nombre mascota ya existe");
+        }
+
         Mascota mascota = new Mascota();
 
         int idUsuario = dto.getIdUsuario();
