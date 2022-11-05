@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import pch.huellaschile.msusuariosmascotas.application.domain.entities.Mascota;
 import pch.huellaschile.msusuariosmascotas.application.domain.entities.Usuario;
+import pch.huellaschile.msusuariosmascotas.application.domain.exception.DuplicatedPetException;
+import pch.huellaschile.msusuariosmascotas.application.domain.exception.DuplicatedUserException;
+import pch.huellaschile.msusuariosmascotas.application.domain.exception.UserNotExistException;
 import pch.huellaschile.msusuariosmascotas.application.ports.input.mascota.SaveMascotaUseCase;
 import pch.huellaschile.msusuariosmascotas.application.ports.output.mascota.MascotaGateway;
 import pch.huellaschile.msusuariosmascotas.application.ports.output.usuario.UsuarioGateway;
@@ -23,18 +26,19 @@ public class SaveMascotaService implements SaveMascotaUseCase {
     private UsuarioGateway gatewayUsuario;
 
     @Override
-    public Mascota execute(RequestMascotaDTO dto) {
+    public Mascota execute(RequestMascotaDTO dto) throws DuplicatedPetException, UserNotExistException {
 
         boolean existeUsuario = gatewayUsuario.existsByIdUsuario(dto.getIdUsuario());
+        Object[] args = {dto.getNombre()};
 
         if(!existeUsuario){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuario no existe");
+            throw new UserNotExistException("user.notexist.message", args);
         }
 
         boolean existMascota = gateway.existsByNombreContainingIgnoreCase(dto.getNombre());
 
         if(existMascota) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nombre mascota ya existe");
+            throw new DuplicatedPetException("pet.duplicated.message", args);
         }
 
         Mascota mascota = new Mascota();

@@ -40,7 +40,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<Usuario> save(@RequestBody Usuario usuario) {
+    public ResponseEntity<Usuario> save(@RequestBody Usuario usuario) throws Exception {
         return new ResponseEntity<>(save.execute(usuario), HttpStatus.CREATED);
     }
 
@@ -50,7 +50,7 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable int id) {
+    public ResponseEntity<Boolean> delete(@PathVariable int id) throws Exception {
         return new ResponseEntity<>(delete.execute(id), HttpStatus.OK);
     }
 }

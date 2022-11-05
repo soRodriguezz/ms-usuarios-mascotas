@@ -11,7 +11,7 @@ import pch.huellaschile.msusuariosmascotas.infrastructure.models.UsuarioDAO;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-10-29T22:41:55-0300",
+    date = "2022-11-05T10:35:20-0300",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.5.1.jar, environment: Java 11.0.17 (Amazon.com Inc.)"
 )
 @Component

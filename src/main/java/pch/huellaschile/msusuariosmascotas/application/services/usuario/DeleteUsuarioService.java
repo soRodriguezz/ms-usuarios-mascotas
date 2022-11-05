@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import pch.huellaschile.msusuariosmascotas.application.domain.entities.Mascota;
+import pch.huellaschile.msusuariosmascotas.application.domain.exception.DuplicatedUserException;
+import pch.huellaschile.msusuariosmascotas.application.domain.exception.UnderTreatmentPetException;
 import pch.huellaschile.msusuariosmascotas.application.ports.input.usuario.DeleteUsuarioUseCase;
 import pch.huellaschile.msusuariosmascotas.application.ports.output.mascota.MascotaGateway;
 import pch.huellaschile.msusuariosmascotas.application.ports.output.usuario.UsuarioGateway;
@@ -20,13 +22,13 @@ public class DeleteUsuarioService implements DeleteUsuarioUseCase {
     private MascotaGateway gatewayMascota;
 
     @Override
-    public Boolean execute(Integer idUsuario){
+    public Boolean execute(Integer idUsuario) throws Exception{
 
         List<Mascota> mascotas = gatewayMascota.findByIdUsuarioAndTratamientoTrue(idUsuario);
 
         if(!mascotas.isEmpty()){
-            // TODO devolver excepcion
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuario tiene mascotas con tratamiento");
+            Object[] args = {mascotas};
+            throw new UnderTreatmentPetException("pet.treatment.message", args);
         }
 
         return gateway.getByIdUsuario(idUsuario).map(certification -> {

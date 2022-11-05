@@ -5,6 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pch.huellaschile.msusuariosmascotas.application.domain.entities.Mascota;
+import pch.huellaschile.msusuariosmascotas.application.domain.exception.DuplicatedPetException;
+import pch.huellaschile.msusuariosmascotas.application.domain.exception.TreatmentActivePetException;
+import pch.huellaschile.msusuariosmascotas.application.domain.exception.UserNotExistException;
 import pch.huellaschile.msusuariosmascotas.application.services.mascota.*;
 import pch.huellaschile.msusuariosmascotas.infrastructure.dto.RequestMascotaDTO;
 import pch.huellaschile.msusuariosmascotas.infrastructure.dto.RequestMascotaUsuarioDTO;
@@ -49,7 +52,7 @@ public class MascotaController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<Mascota> save(@RequestBody RequestMascotaDTO dto) {
+    public ResponseEntity<Mascota> save(@RequestBody RequestMascotaDTO dto) throws DuplicatedPetException, UserNotExistException {
         return new ResponseEntity<>(save.execute(dto), HttpStatus.CREATED);
     }
 
@@ -69,7 +72,7 @@ public class MascotaController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable int id) {
+    public ResponseEntity<Boolean> delete(@PathVariable int id) throws TreatmentActivePetException {
         return new ResponseEntity<>(delete.execute(id), HttpStatus.OK);
     }
 
