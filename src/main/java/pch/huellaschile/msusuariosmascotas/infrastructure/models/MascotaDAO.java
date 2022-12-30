@@ -24,6 +24,18 @@ public class MascotaDAO {
     @JoinColumn(name = "id_usuario",insertable = false,updatable = false)
     private UsuarioDAO usuario;
 
+    public MascotaDAO(Integer idMascota, String nombre, Boolean tratamiento, String raza, Integer idUsuario, UsuarioDAO usuario) {
+        this.idMascota = idMascota;
+        this.nombre = nombre;
+        this.tratamiento = tratamiento;
+        this.raza = raza;
+        this.idUsuario = idUsuario;
+        this.usuario = usuario;
+    }
+
+    public MascotaDAO() {
+    }
+
     public Integer getIdMascota() {
         return idMascota;
     }

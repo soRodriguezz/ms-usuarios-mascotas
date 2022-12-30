@@ -21,6 +21,17 @@ public class UsuarioDAO {
     @OneToMany(mappedBy = "usuario")
     private List<MascotaDAO> mascotaDAOList;
 
+    public UsuarioDAO() {
+    }
+
+    public UsuarioDAO(Integer idUsuario, String rut, String nombre, String apellido, List<MascotaDAO> mascotaDAOList) {
+        this.idUsuario = idUsuario;
+        this.rut = rut;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.mascotaDAOList = mascotaDAOList;
+    }
+
     public Integer getIdUsuario() {
         return idUsuario;
     }

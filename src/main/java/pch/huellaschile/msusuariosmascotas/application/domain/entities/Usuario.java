@@ -6,6 +6,17 @@ public class Usuario {
     private String nombre;
     private String apellido;
 
+    public Usuario() {
+
+    }
+
+    public Usuario(int idUsuario, String rut, String nombre, String apellido) {
+        this.idUsuario = idUsuario;
+        this.rut = rut;
+        this.nombre = nombre;
+        this.apellido = apellido;
+    }
+
     public int getIdUsuario() {
         return idUsuario;
     }

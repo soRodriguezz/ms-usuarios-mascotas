@@ -10,6 +10,17 @@ public class Mascota {
     private int idUsuario;
     private Usuario usuario;
 
+    public Mascota() {}
+
+    public Mascota(int idMascota, String nombre, boolean tratamiento, String raza, int idUsuario, Usuario usuario) {
+        this.idMascota = idMascota;
+        this.nombre = nombre;
+        this.tratamiento = tratamiento;
+        this.raza = raza;
+        this.idUsuario = idUsuario;
+        this.usuario = usuario;
+    }
+
     public int getIdMascota() {
         return idMascota;
     }
